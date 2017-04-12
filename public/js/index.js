@@ -8,6 +8,6 @@ socket.on('disconnect', function() {
 });
 
 socket.on('newMessage', (message) => {
-	console.log('Got new message ', message);
+	console.log('Got new message', message);
 });
 
