@@ -1,5 +1,22 @@
 
 var socket = io();
+
+function scrollToBottom() {
+	//Selectors
+	var messages = $('#messages');
+	var newMessage = messages.children('li:last-child');
+	//Heighgts
+	var clientHeight = messages.prop('clientHeight');
+	var scrollHeight = messages.prop('scrollHeight');
+	var scrollTop = messages.prop('scrollTop');
+	var newMessageHeight = newMessage.innerHeight();
+	var lastMessageHeight = newMessage.prev().innerHeight();
+	
+	if(clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
+		messages.scrollTop(scrollHeight);
+	}
+}
+
 socket.on('connect', function() {
 	console.log('Connected to server');
 });
@@ -8,38 +25,27 @@ socket.on('disconnect', function() {
 	console.log('Disconnected from server');
 });
 
-socket.on('newMessage', (message) => {
-	console.log('Got new message', message);
+socket.on('newMessage', function(message) {
 	var template = $('#message-template').html();
 	var html = Mustache.render(template, {
 																					from: message.from,
 																					date: message.createdAt,	
 																					text: message.text
 																				});
-	
 	$('#messages').append(html);
-//	var li = $('<li></li>');
-//	li.text(`${message.from} - ${message.createdAt} =>  ${message.text}`);
-//	
-//	$('#messages').append(li);
+	scrollToBottom();
 });
 
-socket.on('newLocationMessage', function(message)  {
-	//var li = $('<li></li>');
-	//var a = $('<a target="_blank">My current location</a>');
+socket.on('newLocationMessage', function(message) {
 	var template = $('#location-message-template').html();
 	var html = Mustache.render(template, {
-		from: message.from,
-		date: message.createdAt,
-		url: message.url
-	}); 
+																					from: message.from,
+																					date: message.createdAt,
+																					url: message.url
+																				});
 
 	$('#messages').append(html);
-	
-	//li.text(`${message.from} - ${message.createdAt} =>  `);
-	//a.attr('href', message.url);
-	//li.append(a);
-	//$('#messages').append(li);
+	scrollToBottom();
 });
 
 $('#message-form').on('submit', function(e) {
