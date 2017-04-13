@@ -6,8 +6,20 @@
 </head>
 <body>
   <h1>Welcome to chat App</h1>
-<p>Alloha</p>
+
+  <ol id="messages"></ol>
+
+<form id="message-form">
+  <input type="text" name="message" placeholder="Enter the Message" />
+  <button type="submit">Submit message</button>
+</form>
+<button id="send-location">Send Location</button>
+
 <script src="/socket.io/socket.io.js"></script>
+  <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
 <script src="js/index.js"></script>
 </body>
 </html>
