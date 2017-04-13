@@ -24,7 +24,31 @@
     </div>
 
   </div>
-
+<script id="location-message-template" type="text/template">
+  <li class="message">
+    <div class="message__title">
+      <h4>{{from}}</h4>
+      <span>{{date}}</span>
+    </div>
+    <div id="location-message-body">
+      <p>
+        <a target="_blank" href="{{url}}">My Location</a>
+      </p>
+    </div>
+  </li>
+</script>
+<script id="message-template" type="text/template">
+  <li class="message">
+    <div class="message__title">
+      <h4>{{from}}</h4>
+      <span>{{date}}</span>
+    </div>
+    <div class="message_body">
+      <p>{{text}}</p>
+    </div>
+  </li>
+</script>
+<script src="lib/mustache.js"></script>
 <script src="/socket.io/socket.io.js"></script>
   <script
     src="https://code.jquery.com/jquery-3.2.1.min.js"
