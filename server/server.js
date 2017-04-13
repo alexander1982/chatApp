@@ -11,6 +11,7 @@ var io = socketIO(server);
 
 const generateMessage = require('./utils/message.js').generateMessage;
 const generateLocationMessage = require('./utils/message.js').generateLocationMessage;
+const isRealString = require('./utils/validators/validation.js').isRealString;
 
 app.use(express.static(publicPath));
 
@@ -20,6 +21,13 @@ io.on('connection', (socket) => {
 	socket.emit('newMessage', generateMessage('Admin', 'Hello new user and welcome to our cool chat'));
 	
 	socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined say hello'));
+	
+	socket.on('join', (params, callback) => {
+		if(!isRealString(params.name) || !isRealString(params.room)){
+			callback('Add name and room name');	
+		}
+		callback();
+	});
 	
 	socket.on('createMessage', (message, callback) => {
 		io.emit('newMessage', generateMessage(message.from, message.text));
