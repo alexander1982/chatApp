@@ -11,7 +11,7 @@ socket.on('disconnect', function() {
 socket.on('newMessage', (message) => {
 	console.log('Got new message', message);
 	var li = $('<li></li>');
-	li.text(`${message.from}: ${message.text}`);
+	li.text(`${message.from} - ${message.createdAt} =>  ${message.text}`);
 	
 	$('#messages').append(li);
 });
@@ -20,7 +20,7 @@ socket.on('newLocationMessage', function(message)  {
 	var li = $('<li></li>');
 	var a = $('<a target="_blank">My current location</a>');
 	
-	li.text(`${message.from}: `);
+	li.text(`${message.from} - ${message.createdAt} =>  `);
 	a.attr('href', message.url);
 	li.append(a);
 	$('#messages').append(li);
