@@ -34,6 +34,18 @@ socket.on('disconnect', function() {
 	console.log('Disconnected from server');
 });
 
+socket.on('updateUsersList', function(users) {
+	var ol = $('<ol></ol>');
+	
+	users.forEach(function(user) {
+		ol.append($('<li></li>').text(user));
+	});
+
+	console.log(users);
+	//console.log($('#main-header').text('Hi'));
+	//$('#main-header').text(user.room);
+});
+
 socket.on('newMessage', function(message) {
 	var template = $('#message-template').html();
 	var html = Mustache.render(template, {
@@ -60,7 +72,6 @@ socket.on('newLocationMessage', function(message) {
 $('#message-form').on('submit', function(e) {
 	e.preventDefault();
 	socket.emit('createMessage', {
-		from: 'User',
 		text: $('[name=message]').val()
 	}, function() {
 		$('[name=message]').val(' ');
